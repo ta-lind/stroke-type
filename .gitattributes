@@ -1,0 +1,2 @@
+# Preserve vendored SVG fonts and license notices exactly as obtained.
+fonts/* -text -whitespace

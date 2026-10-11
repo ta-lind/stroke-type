@@ -1,0 +1,4 @@
+Source: https://gitlab.com/oskay/svg-fonts
+Revision: 8c71f2d9e1a5292047bb88e5595a766241b82cc6
+Retrieved: 2026-10-09
+Original glyph paths and per-font metadata are preserved in the SVG files.

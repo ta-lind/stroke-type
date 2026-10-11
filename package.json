@@ -1,0 +1,24 @@
+{
+  "name": "stroke-type-figma-plugin",
+  "version": "0.2.1",
+  "private": true,
+  "scripts": {
+    "build": "node build.cjs",
+    "check": "tsc --strict --target ES2020 --module none --lib ES2020 --types @figma/plugin-typings --noEmit code.ts",
+    "test": "node test.cjs",
+    "test:ui": "node test-ui.cjs",
+    "fonts": "python3 generate-fonts.py"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@figma/plugin-typings": "1.141.0",
+    "playwright": "1.62.1"
+  },
+  "description": "Figma plugin for pen-plotter lettering with 41 bundled SVG stroke fonts.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ta-lind/stroke-type.git"
+  },
+  "homepage": "https://github.com/ta-lind/stroke-type"
+}
