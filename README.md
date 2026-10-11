@@ -1,116 +1,114 @@
 # Stroke Type
 
-[Public repository](https://github.com/ta-lind/stroke-type) · [Download the latest plugin](https://github.com/ta-lind/stroke-type/releases/latest) · [Font credits and licenses](CREDITS.md)
+[Download the plugin](https://github.com/ta-lind/stroke-type/releases/latest) · [Font credits and licenses](CREDITS.md)
 
-A Figma Design development plugin that converts selected text into single-stroke handwriting vectors. It keeps the editable source layer and can regenerate the lettering after changes. All 41 fonts from the SVG Fonts collection are bundled: no font installation or internet connection is needed to run it.
+Turn Figma text into vector lettering for pen plotters. Stroke Type creates unfilled stroke paths, keeps the original text editable, and exports the lettering as SVG.
 
-## Install in Figma desktop
+Choose from 41 bundled fonts, including handwriting, script, sans-serif, serif, and display styles. Adjust letter size, pen width, spacing, and uppercase conversion, then regenerate the vectors whenever the text changes. No font installation or internet connection is needed to use the plugin.
 
-1. Unzip `Stroke-Type-Figma-Plugin.zip` and keep the folder in a permanent location.
-2. Open a Figma Design file you can edit in the desktop application.
-3. Choose **Plugins → Development → Import plugin from manifest…** and select this folder's `manifest.json`.
+## Install
+
+1. Download the ZIP from the [latest release](https://github.com/ta-lind/stroke-type/releases/latest) and unzip it into a permanent folder.
+2. Open an editable Figma Design file in the desktop app.
+3. Choose **Plugins → Development → Import plugin from manifest…** and select `manifest.json` from that folder.
 4. Run **Plugins → Development → Stroke Type**.
 
-This is a Figma desktop development plugin. If Figma asks for a registered plugin ID, create a new development plugin and copy its generated ID into `manifest.json`; keep the remaining fields and files.
+If Figma requests a registered plugin ID, create a new development plugin and copy its generated ID into `manifest.json`.
 
-## Update to 0.2.1
-
-Close Stroke Type, then replace **both `code.js` and `ui.html`** in the folder you originally imported into Figma with the files from the new ZIP. Reopen the plugin. Keep your existing `manifest.json`, including any ID you registered yourself. No reimport is required when you update the same folder.
-
-Version 0.2.1 links this public repository from the plugin and adds an offline **Font credits and licenses** section. Select a font to read its original attribution. The complete SIL OFL text is available in the panel; selecting a classic Hershey font displays its required acknowledgements and distribution conditions. All 41 fonts and the Unicode line-break fix are included.
+To update, close the plugin and replace `code.js` and `ui.html` in the imported folder with the latest versions. Keep your existing manifest, then reopen the plugin.
 
 ## Use
 
-1. Select a text layer, multiple text layers, or a free-positioned frame containing text.
-2. Choose one of the **41 stroke fonts**. EMS Tech remains the default; uppercase is enabled by default. A note below the chooser identifies any accent limitations or multiple-stroke styles.
-3. Keep **Use selected text size** enabled, or disable it to specify capital height in millimeters.
-4. Set pen width and optional additional letter spacing, then click **Convert / update**.
-5. The plugin creates a stroke-vector frame at the original position and retains the original text, hidden by default.
-6. Select the generated frame and click **Edit original**. Edit the source text in Figma, then use **Convert / update** again. The previous generated version is replaced.
+1. Select one or more text layers, or a frame containing text.
+2. Choose a stroke font. The preview shows how the selected text will look.
+3. Use the selected text size, or set a capital height in millimeters. Adjust pen width and letter spacing as needed.
+4. Click **Convert / update**. The vectors appear at the original position; the source text is retained and hidden by default.
+5. To revise the lettering, select the generated frame and click **Edit original**. Edit the text in Figma, then convert again to replace the previous vectors.
 
-When using source size, size is taken from the text layer and converted using the stroke font's em metrics. Explicit capital height is calibrated to the font's uppercase H. Fonts retain their natural letter-to-letter variation.
+Stroke Type creates vector lettering; it does not add fonts to Figma's font picker.
 
-## Plotter SVG export
+## Export SVG
 
-Use **Download stroke SVG** in the plugin. It reads the current canvas vector paths, including your repositioning, and writes centerline paths with `fill="none"`.
+Select the generated lettering and click **Download stroke SVG**. To preserve a layout's positions and dimensions, select its containing frame instead.
 
-- Select generated lettering to export its bounds.
-- Select a containing poster frame to retain the frame's origin and page dimensions.
-- Choose **A3 portrait** or **A3 landscape** to write exactly 297 × 420 mm or 420 × 297 mm.
-- The SVG includes generated lettering only, not other poster artwork or retained text. Do not use Figma's ordinary SVG export for the final pen paths, since it can expand strokes into outlines.
-- Millimeter conversion uses **96 Figma units per inch**: an A3 portrait frame is **1122.519685 × 1587.401575** Figma units. Imported frames with another scale need correction before export.
-- Export stops if letter paths fall outside the chosen page. A physical plot should still be checked at 100% scale with the intended pen and paper.
+The export uses the current vector paths and pen width, writes physical dimensions in millimeters, and contains only lettering generated by Stroke Type. Paths have no fill, so a plotter can follow the strokes.
 
-## Supported and unsupported layouts
+## Layout support
 
-Supported: left, center, and right alignment; explicit newlines (including Unicode line and paragraph separators); word wrapping to the original text box width; rotated layers; ordinary free-positioned frames; original mixed fonts when font size is uniform; mixed sizes when explicit capital height is selected.
+Supports left, center, and right alignment, explicit line breaks, word wrapping, rotated layers, and free-positioned frames. Character support varies by font; the plugin reports missing glyphs.
 
-Not yet supported: exact Figma typography/kerning reproduction, rich text sizing within one generated layer, justified alignment, automatic sizing within auto-layout flows, text inside component instances, or importing additional SVG fonts through the UI. Make text absolute within auto layout, move it into a free-positioned frame, or detach the instance before conversion. The plugin does not register SVG fonts in Figma's font picker.
+The generated lettering uses the chosen stroke font's spacing and proportions, so wrapping and height may differ from the source. Review the result after conversion.
 
-Existing styling is retained on the source layer. Generated text uses the chosen font, uniform letter size, and a dark stroke. Wrapping can change, and output may become taller; the plugin reports this so the poster can be checked.
+Justified text, text inside component instances, and text flowing in auto layout are not supported. Move text into a free-positioned frame, make it absolute in auto layout, or detach the instance before converting. For mixed text sizes, choose an explicit capital height. Importing additional fonts through the UI is not supported.
 
-## Fonts and license
+## Fonts and authors
 
-The complete collection contains **29 EMS fonts and 12 Hershey / Twin Sans fonts**. Full per-font attribution is in [CREDITS.md](CREDITS.md) and in the plugin’s **Font credits and licenses** section. Original SVG sources and embedded attribution are included in `fonts/`, along with `OFL.txt`, `HERSHEY-LICENSE.txt`, and the upstream README. EMS and Twin Sans use SIL OFL 1.1; classic Hershey fonts use their included distribution license. Source: https://gitlab.com/oskay/svg-fonts at revision `8c71f2d9e1a5292047bb88e5595a766241b82cc6`.
+The collection includes 29 EMS fonts and 12 Hershey / Twin Sans fonts from [Windell H. Oskay's SVG Fonts collection](https://gitlab.com/oskay/svg-fonts).
 
-All exported lettering uses unfilled pen paths. Some heavier Hershey styles contain several parallel paths or closed strokes and take more passes to plot. Their paths are preserved as supplied. Missing accented glyphs are reported rather than substituted or stripped.
+The authors below identify the original typeface designers. Most EMS stroke adaptations were created by Sheldon B. Michaels and converted to SVG by Windell H. Oskay. Trammell Hudson prepared EMS SpaceRocks; Keith Packard prepared Twin Sans. Full designer, adaptation, conversion, and distribution credits are in [CREDITS.md](CREDITS.md) and the plugin's **Font credits and licenses** panel.
 
-| Font | Estonian letters | Pen paths |
+| Font | Authors | Pen paths |
 | --- | --- | --- |
-| EMS Tech | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Casual Hand | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Neato | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Allure | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Bird | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Bird Swash Caps | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Brush | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Capitol | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Decorous Script | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Delight | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Delight Swash Caps | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Elfin | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Felix | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Herculean | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Invite | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS League | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Little Princess | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Misty Night | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Nixish | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Nixish Italic | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Osmotron | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Pancakes | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Pepita | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Qwandry | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Readability | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Readability Italic | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS Society | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| EMS SpaceRocks | No Estonian accents | Stroke paths |
-| EMS Swiss | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| Hershey Gothic English | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Gothic German | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Gothic Italian | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Sans 1-stroke | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| Hershey Sans medium | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Script 1-stroke | Õ Ä Ö Ü Š Ž + lowercase | Stroke paths |
-| Hershey Script medium | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Serif bold | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Serif bold italic | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Serif medium | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Hershey Serif medium italic | Õ Ä Ö Ü Š Ž + lowercase | Multiple strokes |
-| Twin Sans | Õ Ä Ö Ü + lowercase; no Š Ž š ž | Stroke paths |
+| EMS Tech | Kimberly Geswein, Kimberly Geswein Fonts | Stroke paths |
+| EMS Casual Hand | Kimberly Geswein, Kimberly Geswein Fonts | Stroke paths |
+| EMS Neato | Roman Shchyukin, Gaslight | Stroke paths |
+| EMS Allure | Rob Leuschke, TypeSETit | Stroke paths |
+| EMS Bird | Rob Leuschke, TypeSETit | Stroke paths |
+| EMS Bird Swash Caps | Rob Leuschke, TypeSETit | Stroke paths |
+| EMS Brush | Rob Leuschke, TypeSETit | Stroke paths |
+| EMS Capitol | Brian J. Bonislawsky, Astigmatic One Eye Typographic Institute | Stroke paths |
+| EMS Decorous Script | Impallari Type | Stroke paths |
+| EMS Delight | Natalia Raices | Stroke paths |
+| EMS Delight Swash Caps | Natalia Raices | Stroke paths |
+| EMS Elfin | Crystal Kluge, Tart Workshop | Stroke paths |
+| EMS Felix | Fontstage | Stroke paths |
+| EMS Herculean | Denis Masharov | Stroke paths |
+| EMS Invite | Toshi Omagari | Stroke paths |
+| EMS League | Haley Fiege, the League of Moveable Type | Stroke paths |
+| EMS Little Princess | Crystal Kluge, Tart Workshop | Stroke paths |
+| EMS Misty Night | Grzegorz L, GLUK fonts | Stroke paths |
+| EMS Nixish | Jovanny Lemonad | Stroke paths |
+| EMS Nixish Italic | Jovanny Lemonad | Stroke paths |
+| EMS Osmotron | Matt McInerney, the League of Moveable Type | Stroke paths |
+| EMS Pancakes | James Grieshaber, Typeco | Stroke paths |
+| EMS Pepita | Philippe Cochy | Stroke paths |
+| EMS Qwandry | Rob Leuschke, TypeSETit | Stroke paths |
+| EMS Readability | Paul D. Hunt, Adobe | Stroke paths |
+| EMS Readability Italic | Paul D. Hunt, Adobe | Stroke paths |
+| EMS Society | Alejandro Paul, Sudtipos | Stroke paths |
+| EMS SpaceRocks | Ed Logg; Trammell Hudson | Stroke paths |
+| EMS Swiss | Rob Leuschke, TypeSETit | Stroke paths |
+| Hershey Gothic English | A. V. Hershey | Multiple strokes |
+| Hershey Gothic German | A. V. Hershey | Multiple strokes |
+| Hershey Gothic Italian | A. V. Hershey | Multiple strokes |
+| Hershey Sans 1-stroke | A. V. Hershey | Stroke paths |
+| Hershey Sans medium | A. V. Hershey | Multiple strokes |
+| Hershey Script 1-stroke | A. V. Hershey | Stroke paths |
+| Hershey Script medium | A. V. Hershey | Multiple strokes |
+| Hershey Serif bold | A. V. Hershey | Multiple strokes |
+| Hershey Serif bold italic | A. V. Hershey | Multiple strokes |
+| Hershey Serif medium | A. V. Hershey | Multiple strokes |
+| Hershey Serif medium italic | A. V. Hershey | Multiple strokes |
+| Twin Sans | Keith Packard; A. V. Hershey | Stroke paths |
 
-## Validation
+Some heavier styles use multiple pen strokes and take longer to plot. Original SVG sources, metadata, and license notices are included in `fonts/`.
 
-The plugin passed strict TypeScript checking, 225 renderer and controller tests (with a Figma API mock), and headless-browser UI tests. Tests render every drawable glyph, convert and regenerate each font, and cover supported accent characters, Estonian fixtures with Unicode line breaks across every compatible font, wrapping, path transforms, source retention, regeneration, batch preflight, mixed sizing, hidden-layer selection, control inputs, and exact A3 SVG dimensions. Automated controller tests use a mock rather than a live Figma editor.
+## Development
 
-## Source and rebuild
+Requires Node.js and Python 3. The release includes precompiled `code.js`, so users do not need to build it.
 
-`code.ts` is the complete deployable entrypoint. It is assembled from `engine.ts`, `fonts-data.ts`, and `controller.ts`. `code.js` is precompiled and runs without a build step.
+```sh
+npm ci
+npm run fonts
+npm run build
+npm run check
+npm test
+```
 
-To regenerate the embedded font data and chooser from the included SVG sources, run `python3 generate-fonts.py` (Python standard library only), then `node build.cjs`. The original three font metrics and glyph geometry are unchanged.
+`generate-fonts.py` bundles the included SVG sources, credits, and chooser options. `build.cjs` assembles `engine.ts`, `fonts-data.ts`, and `controller.ts` into the plugin entrypoint.
 
-For development, install Node.js and Python 3, run `npm ci`, then use `npm run fonts`, `npm run build`, `npm run check`, and `npm test`. Use `npm run test:ui` after installing a Playwright browser or set `STROKE_TYPE_CHROME` to your installed Chrome executable.
+Run `npm run test:ui` with a Playwright browser installed, or set `STROKE_TYPE_CHROME` to a Chrome executable. Renderer and controller tests cover glyphs, wrapping, transforms, source retention, regeneration, and SVG export. Controller tests use a Figma API mock; browser tests check controls and the credits panel.
 
-## Code license
+## Licenses
 
-Stroke Type plugin code is [MIT licensed](LICENSE). Font sources and generated representations retain the separate licenses documented in [CREDITS.md](CREDITS.md).
+Plugin code is [MIT licensed](LICENSE). EMS and Twin Sans fonts retain the [SIL Open Font License 1.1](fonts/OFL.txt); classic Hershey fonts retain their [distribution license and required acknowledgements](fonts/HERSHEY-LICENSE.txt). Font sources and generated font data remain under their respective font licenses. See [CREDITS.md](CREDITS.md) for full attribution.
